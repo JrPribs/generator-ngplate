@@ -1,2 +1,2 @@
 # ngGenPlate
-> Pure butter AngularJS app boilerplate generator
+> A buttery ES6 AngularJS app boilerplate generator
