@@ -6,7 +6,8 @@ import yosay from 'yosay';
 
 export default class ngplate extends Base {
   constructor() {
-    this._.templateSettings.interpolate = /<%=([\s\S]+?)%>/g;
+      super();
+      this._.templateSettings.interpolate = /<%=([\s\S]+?)%>/g;
   }
 
   get prompting() {
