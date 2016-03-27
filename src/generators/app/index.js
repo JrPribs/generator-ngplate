@@ -1,20 +1,24 @@
 'use strict';
-var yeoman = require('yeoman-generator');
-var chalk = require('chalk');
-var yosay = require('yosay');
+import { Base } from 'yeoman-generator';
+import chalk from 'chalk';
+import yosay from 'yosay';
 
-module.exports = yeoman.generators.Base.extend({
-    prompting: function() {
-        var done = this.async();
+export default class ngplate extends Base {
+    constructor() {
+        super();
+        this._.templateSettings.interpolate = /<%=([\s\S]+?)%>/g;
+    }
+    prompting() {
+        const done = this.async();
 
         // Have Yeoman greet the user.
         this.log(yosay(
-            'Welcome to the top-notch ' + chalk.red(
-                'Electron Angular Material') +
-            ' generator!'
+            `Welcome to the top-notch
+            ${chalk.red('Electron Angular Material')}
+            generator!`
         ));
 
-        var prompts = [{
+        const prompts = [{
             type: 'input',
             name: 'appTitle',
             message: 'What would you like to call this application?',
@@ -36,7 +40,7 @@ module.exports = yeoman.generators.Base.extend({
             store: true
         }, {
             type: 'input',
-            name: 'licenceType',
+            name: 'licenseType',
             message: 'What type of license is this application under?',
             store: true
         }, {
@@ -46,13 +50,13 @@ module.exports = yeoman.generators.Base.extend({
             store: true
         }];
 
-        this.prompt(prompts, function(props) {
-            this.props = props;
-            done();
-        }.bind(this));
-    },
-
-    writing: function() {
+        this.prompt(prompts, props => {
+          this.props = props;
+          // To access props later use this.props.someOption;
+          done();
+        });
+    }
+    writing() {
 
         this.fs.copy(
             this.templatePath('main.js'),
@@ -84,9 +88,7 @@ module.exports = yeoman.generators.Base.extend({
             this.destinationPath('index.html'), {
                 //appTitle: this.props.appTitle.replace(/ /g, '').toLowerCase(), //make this camel case in the future
                 appTitle: this.props.appTitle.toLowerCase()
-                    .replace(/ (.)/g, function(match, group1) {
-                        return group1.toUpperCase();
-                    }) + 'App',
+                    .replace(/ (.)/g, (match, group1) => group1.toUpperCase()) + 'App',
                 title: this.props.appTitle
             }
         );
@@ -94,8 +96,7 @@ module.exports = yeoman.generators.Base.extend({
         this.fs.copyTpl(
             this.templatePath('package.json'),
             this.destinationPath('package.json'), {
-                packageName: this.props.appTitle.replace(/ /g,
-                    '-').toLowerCase(),
+                packageName: this.props.appTitle.replace(/ /g, '-').toLowerCase(),
                 packageDescription: this.props.packageDescription,
                 gitRepo: this.props.gitRepo,
                 packageAuthor: this.props.packageAuthor,
@@ -106,8 +107,7 @@ module.exports = yeoman.generators.Base.extend({
         this.fs.copyTpl(
             this.templatePath('bower.json'),
             this.destinationPath('bower.json'), {
-                packageName: this.props.appTitle.replace(/ /g,
-                    '-').toLowerCase(),
+                packageName: this.props.appTitle.replace(/ /g, '-').toLowerCase(),
                 packageDescription: this.props.packageDescription,
                 packageAuthor: this.props.packageAuthor,
                 licenceType: this.props.licenceType,
@@ -119,13 +119,9 @@ module.exports = yeoman.generators.Base.extend({
             this.templatePath('app.js'),
             this.destinationPath('js/app.js'), {
                 appTitle: this.props.appTitle.toLowerCase()
-                    .replace(/ (.)/g, function(match, group1) {
-                        return group1.toUpperCase();
-                    }) + 'App',
+                    .replace(/ (.)/g, (match, group1) => group1.toUpperCase()) + 'App',
                 appControllers: this.props.appTitle.toLowerCase()
-                    .replace(/ (.)/g, function(match, group1) {
-                        return group1.toUpperCase();
-                    }) + 'Controllers'
+                    .replace(/ (.)/g, (match, group1) => group1.toUpperCase()) + 'Controllers'
             }
         );
 
@@ -133,9 +129,7 @@ module.exports = yeoman.generators.Base.extend({
             this.templatePath('controllers.js'),
             this.destinationPath('js/controllers.js'), {
                 appControllers: this.props.appTitle.toLowerCase()
-                    .replace(/ (.)/g, function(match, group1) {
-                        return group1.toUpperCase();
-                    }) + 'Controllers'
+                    .replace(/ (.)/g, (match, group1) => group1.toUpperCase()) + 'Controllers'
             }
         );
 
@@ -143,14 +137,11 @@ module.exports = yeoman.generators.Base.extend({
             this.templatePath('tests/controllerTests.js'),
             this.destinationPath('tests/controllerTests.js'), {
                 appControllers: this.props.appTitle.toLowerCase()
-                    .replace(/ (.)/g, function(match, group1) {
-                        return group1.toUpperCase();
-                    }) + 'Controllers'
+                    .replace(/ (.)/g, (match, group1) => group1.toUpperCase()) + 'Controllers'
             }
         );
-    },
-
-    install: function() {
+    }
+    install() {
         this.installDependencies();
     }
-});
+}
