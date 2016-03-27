@@ -1,0 +1,30 @@
+{
+    "name": "<%- packageName %>",
+    "version": "0.1.0",
+    "description": "<%- packageDescription %>",
+    "main": "main.js",
+    "scripts": {
+        "start": "node_modules/.bin/electron .",
+        "debug": "node_modules/.bin/electron --debug=5858 .",
+        "test": "node_modules/.bin/karma start"
+    },
+    "repository": {
+        "type": "git",
+        "url": "<%- gitRepo %>"
+    },
+    "author": "<%- packageAuthor %>",
+    "license": "<%- licenceType %>",
+    "devDependencies": {
+        "electron-prebuilt": "^0.36.10",
+        "jasmine-core": "^2.4.1",
+        "karma": "^0.13.22",
+        "karma-chrome-launcher": "^0.2.2",
+        "karma-firefox-launcher": "^0.1.7",
+        "karma-jasmine": "^0.3.7"
+    },
+    "dependencies": {
+        "electron-prebuilt": "^0.36.10",
+        "gulp": "^3.9.1",
+        "requirejs": "^2.2.0"
+    }
+}
